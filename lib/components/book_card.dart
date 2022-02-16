@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ebook_app/components/loading_widget.dart';
-import 'package:flutter_ebook_app/models/category.dart';
-import 'package:flutter_ebook_app/util/router.dart';
+import 'package:studentprojectmanager/components/loading_widget.dart';
+import 'package:studentprojectmanager/models/category.dart';
+import 'package:studentprojectmanager/util/router.dart';
 import 'package:uuid/uuid.dart';
 
 import '../views/details/details.dart';

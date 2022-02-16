@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ebook_app/components/download_alert.dart';
-import 'package:flutter_ebook_app/database/download_helper.dart';
-import 'package:flutter_ebook_app/database/favorite_helper.dart';
-import 'package:flutter_ebook_app/models/category.dart';
-import 'package:flutter_ebook_app/util/api.dart';
-import 'package:flutter_ebook_app/util/consts.dart';
+import 'package:studentprojectmanager/components/download_alert.dart';
+import 'package:studentprojectmanager/database/download_helper.dart';
+import 'package:studentprojectmanager/database/favorite_helper.dart';
+import 'package:studentprojectmanager/models/category.dart';
+import 'package:studentprojectmanager/util/api.dart';
+import 'package:studentprojectmanager/util/consts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 

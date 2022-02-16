@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_ebook_app/util/router.dart';
+import 'package:studentprojectmanager/util/router.dart';
 
-import 'package:flutter_ebook_app/views/auth/constants/constants.dart';
-import 'package:flutter_ebook_app/views/auth/signup.dart';
-import 'package:flutter_ebook_app/views/auth/widgets/custom_shape.dart';
-import 'package:flutter_ebook_app/views/auth/widgets/responsive_ui.dart';
-import 'package:flutter_ebook_app/views/auth/widgets/textformfield.dart';
-import 'package:flutter_ebook_app/views/main_screen.dart';
+import 'package:studentprojectmanager/views/auth/constants/constants.dart';
+import 'package:studentprojectmanager/views/auth/signup.dart';
+import 'package:studentprojectmanager/views/auth/widgets/custom_shape.dart';
+import 'package:studentprojectmanager/views/auth/widgets/responsive_ui.dart';
+import 'package:studentprojectmanager/views/auth/widgets/textformfield.dart';
+import 'package:studentprojectmanager/views/main_screen.dart';
 
 class SignInPage extends StatelessWidget {
   @override

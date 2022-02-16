@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ebook_app/util/api.dart';
-import 'package:flutter_ebook_app/util/enum/api_request_status.dart';
-import 'package:flutter_ebook_app/util/functions.dart';
+import 'package:studentprojectmanager/util/api.dart';
+import 'package:studentprojectmanager/util/enum/api_request_status.dart';
+import 'package:studentprojectmanager/util/functions.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../models/category.dart';

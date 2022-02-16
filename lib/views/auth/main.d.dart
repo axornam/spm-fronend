@@ -1,8 +1,8 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
-// import 'package:flutter_ebook_app/views/auth/constants/constants.dart';
-// import 'package:flutter_ebook_app/views/auth/login.dart';
-// import 'package:flutter_ebook_app/views/auth/signup.dart';
+// import 'package:studentprojectmanager/views/auth/constants/constants.dart';
+// import 'package:studentprojectmanager/views/auth/login.dart';
+// import 'package:studentprojectmanager/views/auth/signup.dart';
 
 // void main() => runApp(MyApp());
 

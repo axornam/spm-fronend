@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ebook_app/util/router.dart';
+import 'package:studentprojectmanager/util/router.dart';
 
-import 'package:flutter_ebook_app/views/auth/constants/constants.dart';
-import 'package:flutter_ebook_app/views/auth/widgets/custom_shape.dart';
-import 'package:flutter_ebook_app/views/auth/widgets/customappbar.dart';
-import 'package:flutter_ebook_app/views/auth/widgets/responsive_ui.dart';
-import 'package:flutter_ebook_app/views/auth/widgets/textformfield.dart';
+import 'package:studentprojectmanager/views/auth/constants/constants.dart';
+import 'package:studentprojectmanager/views/auth/widgets/custom_shape.dart';
+import 'package:studentprojectmanager/views/auth/widgets/customappbar.dart';
+import 'package:studentprojectmanager/views/auth/widgets/responsive_ui.dart';
+import 'package:studentprojectmanager/views/auth/widgets/textformfield.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override

@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_ebook_app/components/custom_alert.dart';
-import 'package:flutter_ebook_app/util/consts.dart';
+import 'package:studentprojectmanager/components/custom_alert.dart';
+import 'package:studentprojectmanager/util/consts.dart';
 
 class Dialogs {
   showExitDialog(BuildContext context) {

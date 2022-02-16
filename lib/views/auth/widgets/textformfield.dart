@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ebook_app/views/auth/widgets/responsive_ui.dart';
+import 'package:studentprojectmanager/views/auth/widgets/responsive_ui.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hint;

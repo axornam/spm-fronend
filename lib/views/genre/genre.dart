@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_ebook_app/components/body_builder.dart';
-import 'package:flutter_ebook_app/components/book_list_item.dart';
-import 'package:flutter_ebook_app/components/loading_widget.dart';
-import 'package:flutter_ebook_app/models/category.dart';
-import 'package:flutter_ebook_app/view_models/genre_provider.dart';
+import 'package:studentprojectmanager/components/body_builder.dart';
+import 'package:studentprojectmanager/components/book_list_item.dart';
+import 'package:studentprojectmanager/components/loading_widget.dart';
+import 'package:studentprojectmanager/models/category.dart';
+import 'package:studentprojectmanager/view_models/genre_provider.dart';
 import 'package:provider/provider.dart';
 
 class Genre extends StatefulWidget {

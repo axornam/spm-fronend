@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ebook_app/theme/theme_config.dart';
-import 'package:flutter_ebook_app/util/consts.dart';
-import 'package:flutter_ebook_app/view_models/app_provider.dart';
-import 'package:flutter_ebook_app/view_models/home_provider.dart';
-import 'package:flutter_ebook_app/views/splash/splash.dart';
+import 'package:studentprojectmanager/theme/theme_config.dart';
+import 'package:studentprojectmanager/util/consts.dart';
+import 'package:studentprojectmanager/view_models/app_provider.dart';
+import 'package:studentprojectmanager/view_models/home_provider.dart';
+import 'package:studentprojectmanager/views/splash/splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 

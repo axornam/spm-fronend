@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epub_viewer/epub_viewer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ebook_app/components/loading_widget.dart';
-import 'package:flutter_ebook_app/database/download_helper.dart';
-import 'package:flutter_ebook_app/database/locator_helper.dart';
+import 'package:studentprojectmanager/components/loading_widget.dart';
+import 'package:studentprojectmanager/database/download_helper.dart';
+import 'package:studentprojectmanager/database/locator_helper.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:uuid/uuid.dart';
 
@@ -70,12 +70,10 @@ class _DownloadsState extends State<Downloads> {
                 enableTts: false,
                 allowSharing: true,
               );
-              EpubViewer.open(
-                  path,
+              EpubViewer.open(path,
                   lastLocation: locators.isNotEmpty
                       ? EpubLocator.fromJson(locators[0])
-                      : null
-              );
+                      : null);
               EpubViewer.locatorStream.listen((event) async {
                 // Get locator here
                 Map json = jsonDecode(event);

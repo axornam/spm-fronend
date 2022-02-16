@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ebook_app/models/category.dart';
-import 'package:flutter_ebook_app/util/api.dart';
-import 'package:flutter_ebook_app/util/enum/api_request_status.dart';
-import 'package:flutter_ebook_app/util/functions.dart';
+import 'package:studentprojectmanager/models/category.dart';
+import 'package:studentprojectmanager/util/api.dart';
+import 'package:studentprojectmanager/util/enum/api_request_status.dart';
+import 'package:studentprojectmanager/util/functions.dart';
 
 class HomeProvider with ChangeNotifier {
   CategoryFeed top = CategoryFeed();

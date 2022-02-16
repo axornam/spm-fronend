@@ -4,12 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epub_viewer/epub_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_ebook_app/components/book_list_item.dart';
-import 'package:flutter_ebook_app/components/description_text.dart';
-import 'package:flutter_ebook_app/components/loading_widget.dart';
-import 'package:flutter_ebook_app/database/locator_helper.dart';
-import 'package:flutter_ebook_app/models/category.dart';
-import 'package:flutter_ebook_app/view_models/details_provider.dart';
+import 'package:studentprojectmanager/components/book_list_item.dart';
+import 'package:studentprojectmanager/components/description_text.dart';
+import 'package:studentprojectmanager/components/loading_widget.dart';
+import 'package:studentprojectmanager/database/locator_helper.dart';
+import 'package:studentprojectmanager/models/category.dart';
+import 'package:studentprojectmanager/view_models/details_provider.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -322,9 +322,7 @@ class _DetailsState extends State<Details> {
   }
 
   _share() {
-    Share.share(
-      '${widget.entry.title!.t} by ${widget.entry.author!.name!.t}'
-      'Read/Download ${widget.entry.title!.t} from ${widget.entry.link![3].href}.'
-    );
+    Share.share('${widget.entry.title!.t} by ${widget.entry.author!.name!.t}'
+        'Read/Download ${widget.entry.title!.t} from ${widget.entry.link![3].href}.');
   }
 }
