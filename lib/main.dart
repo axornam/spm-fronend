@@ -9,6 +9,7 @@ import 'package:studentprojectmanager/view_models/favorites_provider.dart';
 import 'package:studentprojectmanager/view_models/genre_provider.dart';
 import 'package:studentprojectmanager/view_models/home_provider.dart';
 import 'package:studentprojectmanager/views/home/home.dart';
+import 'package:studentprojectmanager/views/main_screen.dart';
 
 void main() {
   runApp(
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           title: Constants.appName,
           theme: themeData(appProvider.theme),
           darkTheme: themeData(ThemeConfig.darkTheme),
-          home: Home(),
+          home: MainScreen(),
           // routes: <String, WidgetBuilder>{
           // SIGN_IN: (BuildContext context) => SignInPage(),
           // SIGN_UP: (BuildContext context) => SignUpScreen(),
