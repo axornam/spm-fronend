@@ -46,7 +46,7 @@ class Api {
     return category;
   }
 
-  Future signIn(Map<String, String> body) async {
+  Future<Map<String, dynamic>?> signIn(Map<String, String> body) async {
     var uri = Uri.parse(loginEndPoint);
     http.Response response = await http.post(uri,
         headers: {"Content-Type": "application/json"}, body: json.encode(body));

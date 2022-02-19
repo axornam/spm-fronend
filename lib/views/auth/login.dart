@@ -232,7 +232,7 @@ class _SignInScreenState extends State<SignInScreen> {
         logger.i(res);
 
         // switch to home page on success
-        if (res['message'] == 'success') {
+        if (res?['message'] == 'success') {
           // store user data to shared_preferences / local storage
           var prefs = await SharedPreferences.getInstance();
           bool success = await prefs.setStringList(
@@ -242,9 +242,9 @@ class _SignInScreenState extends State<SignInScreen> {
             Functions.showToast('Login Successful');
             MyRouter.pushPageReplacement(context, MainScreen());
           }
-        } else if (res['message'] == 'failed') {
+        } else if (res?['message'] == 'failed') {
           Functions.showToast('Error, Login Failed');
-        } else if (res['message'] == 'error') {
+        } else if (res?['message'] == 'error') {
           //
           Functions.showToast('Server Error');
         }
