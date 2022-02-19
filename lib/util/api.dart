@@ -69,7 +69,26 @@ class Api {
     return res;
   }
 
-  Future<Map<String, dynamic>?> register(var body) async {
-    return null;
+  Future<Map<String, dynamic>?> register(Map<String, String> body) async {
+    var uri = Uri.parse(registerEndPoint);
+    http.Response response = await http.post(uri,
+        headers: {"Content-Type": "application/json"}, body: json.encode(body));
+    logger.d(response.statusCode, response.body);
+
+    Map<String, dynamic> res;
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // user found
+      res = {"message": "success", "body": json.decode(response.body)};
+    } else if (response.statusCode == 400 || response.statusCode == 404) {
+      // user not found
+      res = {"message": "failed", "body": response.body};
+    } else if (response.statusCode >= 500) {
+      // server error
+      res = {"message": "error", "body": null};
+    } else {
+      res = {};
+    }
+    return res;
   }
 }
