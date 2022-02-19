@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:studentprojectmanager/util/router.dart';
-
-import 'package:studentprojectmanager/views/auth/constants/constants.dart';
 import 'package:studentprojectmanager/views/auth/signup.dart';
 import 'package:studentprojectmanager/views/auth/widgets/custom_shape.dart';
 import 'package:studentprojectmanager/views/auth/widgets/responsive_ui.dart';
@@ -264,7 +262,7 @@ class _SignInScreenState extends State<SignInScreen> {
           GestureDetector(
             onTap: () {
               // Navigator.of(context).pushNamed(SIGN_UP);
-              MyRouter.pushPageReplacement(context, SignUpScreen());
+              MyRouter.pushPage(context, SignUpScreen());
               print("Routing to Sign up screen");
             },
             child: Text(

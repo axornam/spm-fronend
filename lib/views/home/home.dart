@@ -31,15 +31,15 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
       builder:
           (BuildContext context, HomeProvider homeProvider, Widget? child) {
         return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              '${Constants.appName}',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-          ),
+          // appBar: AppBar(
+          //   centerTitle: true,
+          //   title: Text(
+          //     '${Constants.appName}',
+          //     style: TextStyle(
+          //       fontSize: 20.0,
+          //     ),
+          //   ),
+          // ),
           body: _buildBody(homeProvider),
         );
       },

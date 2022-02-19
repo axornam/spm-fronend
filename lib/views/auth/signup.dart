@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:studentprojectmanager/util/router.dart';
-
-import 'package:studentprojectmanager/views/auth/constants/constants.dart';
 import 'package:studentprojectmanager/views/auth/widgets/custom_shape.dart';
 import 'package:studentprojectmanager/views/auth/widgets/customappbar.dart';
 import 'package:studentprojectmanager/views/auth/widgets/responsive_ui.dart';

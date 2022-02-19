@@ -81,8 +81,7 @@ class Feed {
     title = json['title'] != null ? Id.fromJson(json['title']) : null;
     updated = json['updated'] != null ? Id.fromJson(json['updated']) : null;
     icon = json['icon'] != null ? Id.fromJson(json['icon']) : null;
-    author =
-        json['author'] != null ? Author.fromJson(json['author']) : null;
+    author = json['author'] != null ? Author.fromJson(json['author']) : null;
     if (json['link'] != null) {
       link = <Link>[];
       json['link'].forEach((v) {

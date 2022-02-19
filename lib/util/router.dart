@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MyRouter{
+class MyRouter {
   static Future pushPage(BuildContext context, Widget page) {
     var val = Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) {
-          return page;
-        },
+        builder: (BuildContext context) => page,
       ),
     );
 
@@ -18,9 +16,7 @@ class MyRouter{
     var val = Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) {
-          return page;
-        },
+        builder: (BuildContext context) => page,
         fullscreenDialog: true,
       ),
     );
@@ -32,10 +28,14 @@ class MyRouter{
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) {
-          return page;
-        },
+        builder: (BuildContext context) => page,
       ),
+    );
+  }
+
+  static popPage(BuildContext context) {
+    Navigator.pop(
+      context,
     );
   }
 }

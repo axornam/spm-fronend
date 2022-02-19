@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studentprojectmanager/theme/theme_config.dart';
 import 'package:studentprojectmanager/util/router.dart';
 import 'package:studentprojectmanager/view_models/app_provider.dart';
+import 'package:studentprojectmanager/views/auth/login.dart';
 import 'package:studentprojectmanager/views/downloads/downloads.dart';
 import 'package:studentprojectmanager/views/favorites/favorites.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -33,6 +34,11 @@ class _ProfileState extends State<Profile> {
         'icon': Feather.moon,
         'title': 'Dark Mode',
         'function': () => _pushPage(Downloads()),
+      },
+      {
+        'icon': Feather.user,
+        'title': 'Login',
+        'function': () => _pushPage(SignInPage()),
       },
       {
         'icon': Feather.info,
@@ -128,7 +134,7 @@ class _ProfileState extends State<Profile> {
             'About',
           ),
           content: Text(
-            'Simple eBook app by JideGuru',
+            'Final Year Project Application',
           ),
           actions: <Widget>[
             FlatButton(

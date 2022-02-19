@@ -23,6 +23,7 @@ class Api {
     var res = await dio.get(url).catchError((e) {
       throw (e);
     });
+
     CategoryFeed category;
     if (res.statusCode == 200) {
       Xml2Json xml2json = new Xml2Json();
