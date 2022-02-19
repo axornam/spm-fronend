@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Functions {
   static isDark(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
+  }
+
+  static showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: "Login Successful",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black26,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   static bool checkConnectionError(e) {
