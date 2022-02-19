@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentprojectmanager/util/router.dart';
 import 'package:studentprojectmanager/views/auth/signup.dart';
 import 'package:studentprojectmanager/views/auth/widgets/custom_shape.dart';
 import 'package:studentprojectmanager/views/auth/widgets/responsive_ui.dart';
 import 'package:studentprojectmanager/views/auth/widgets/textformfield.dart';
 import 'package:studentprojectmanager/views/main_screen.dart';
+import 'package:logger/logger.dart';
+
+import '../../util/functions.dart';
+import '../../util/api.dart';
 
 class SignInPage extends StatelessWidget {
   @override
@@ -30,6 +35,8 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
+  Api api = Api();
+  var log = Logger();
 
   @override
   Widget build(BuildContext context) {
@@ -217,14 +224,26 @@ class _SignInScreenState extends State<SignInScreen> {
     return RaisedButton(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () {
-        print("Routing to your account");
-        // validate form text
+      onPressed: () async {
+        String email = emailController.text;
+        String password = passwordController.text;
+
+        var res = await api.signIn({"email": email, "password": password});
+
         // switch to home page on success
-        MyRouter.pushPageReplacement(context, MainScreen());
-        // display error message of failure
-        Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text('Login Successful')));
+        if (res?['user'] == email && res?['token'] != null) {
+          // store user data to shared_preferences / local storage
+          var prefs = await SharedPreferences.getInstance();
+          bool success =
+              await prefs.setStringList("user", [res?['user'], res?['token']]);
+          // on local storage true - redirect to homepage
+          if (success) {
+            Functions.showToast("Login Successful");
+            MyRouter.pushPageReplacement(context, MainScreen());
+          }
+        } else {
+          Functions.showToast('Error, Login Failed');
+        }
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
