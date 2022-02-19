@@ -8,7 +8,6 @@ import 'package:studentprojectmanager/view_models/details_provider.dart';
 import 'package:studentprojectmanager/view_models/favorites_provider.dart';
 import 'package:studentprojectmanager/view_models/genre_provider.dart';
 import 'package:studentprojectmanager/view_models/home_provider.dart';
-import 'package:studentprojectmanager/views/home/home.dart';
 import 'package:studentprojectmanager/views/main_screen.dart';
 
 void main() {
