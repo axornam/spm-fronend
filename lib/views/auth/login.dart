@@ -36,7 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> _key = GlobalKey();
   Api api = Api();
-  var log = Logger();
+  var logger = Logger();
 
   @override
   Widget build(BuildContext context) {
@@ -229,20 +229,24 @@ class _SignInScreenState extends State<SignInScreen> {
         String password = passwordController.text;
 
         var res = await api.signIn({"email": email, "password": password});
+        logger.i(res);
 
         // switch to home page on success
-        if (res?['user'] == email && res?['token'] != null) {
+        if (res['message'] == 'success') {
           // store user data to shared_preferences / local storage
           var prefs = await SharedPreferences.getInstance();
-          bool success =
-              await prefs.setStringList("user", [res?['user'], res?['token']]);
+          bool success = await prefs.setStringList(
+              "user", [res?['body']['user'], res?['body']['token']]);
           // on local storage true - redirect to homepage
           if (success) {
-            Functions.showToast("Login Successful");
+            Functions.showToast('Login Successful');
             MyRouter.pushPageReplacement(context, MainScreen());
           }
-        } else {
+        } else if (res['message'] == 'failed') {
           Functions.showToast('Error, Login Failed');
+        } else if (res['message'] == 'error') {
+          //
+          Functions.showToast('Server Error');
         }
       },
       textColor: Colors.white,
