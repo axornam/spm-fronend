@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:studentprojectmanager/util/router.dart';
+import 'package:studentprojectmanager/views/auth/login.dart';
 import 'package:studentprojectmanager/views/auth/widgets/custom_shape.dart';
 import 'package:studentprojectmanager/views/auth/widgets/customappbar.dart';
 import 'package:studentprojectmanager/views/auth/widgets/responsive_ui.dart';
 import 'package:studentprojectmanager/views/auth/widgets/textformfield.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+
+import '../../util/api.dart';
+import '../../util/functions.dart';
+import '../main_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -17,6 +25,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late double _pixelRatio;
   late bool _large;
   late bool _medium;
+
+  // text field controllers
+  TextEditingController fNameController = TextEditingController();
+  TextEditingController lNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController departmentController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
+  // utils
+  Api api = Api();
+  Logger logger = Logger();
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +63,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: _height / 35,
                 ),
                 button(),
-                infoTextRow(),
-                socialIconsRow(),
-                //signInTextRow(),
+                // infoTextRow(),
+                // socialIconsRow(),
+                signInTextRow(),
               ],
             ),
           ),
@@ -150,6 +170,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             SizedBox(height: _height / 60.0),
             phoneTextFormField(),
             SizedBox(height: _height / 60.0),
+            departmentTextFormField(),
+            SizedBox(height: _height / 60.0),
             passwordTextFormField(),
           ],
         ),
@@ -162,7 +184,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       keyboardType: TextInputType.text,
       icon: Icons.person,
       hint: "First Name",
-      textEditingController: TextEditingController(),
+      textEditingController: fNameController,
     );
   }
 
@@ -171,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       keyboardType: TextInputType.text,
       icon: Icons.person,
       hint: "Last Name",
-      textEditingController: TextEditingController(),
+      textEditingController: lNameController,
     );
   }
 
@@ -180,7 +202,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       keyboardType: TextInputType.emailAddress,
       icon: Icons.email,
       hint: "Email ID",
-      textEditingController: TextEditingController(),
+      textEditingController: emailController,
+    );
+  }
+
+  Widget departmentTextFormField() {
+    return CustomTextField(
+      keyboardType: TextInputType.text,
+      icon: Icons.house,
+      hint: "Department",
+      textEditingController: departmentController,
     );
   }
 
@@ -189,7 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       keyboardType: TextInputType.number,
       icon: Icons.phone,
       hint: "Mobile Number",
-      textEditingController: TextEditingController(),
+      textEditingController: phoneController,
     );
   }
 
@@ -199,7 +230,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       obscureText: true,
       icon: Icons.lock,
       hint: "Password",
-      textEditingController: TextEditingController(),
+      textEditingController: passwordController,
     );
   }
 
@@ -232,8 +263,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return RaisedButton(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () {
-        print("Routing to your account");
+      onPressed: () async {
+        Map<String, String> form = {
+          "name": fNameController.text + " " + lNameController.text,
+          "email": emailController.text,
+          "phone": phoneController.text,
+          "password": passwordController.text,
+          "department": departmentController.text
+        };
+
+        // logger.i(form);
+        var res = await api.register(form);
+        logger.i(res);
+        //
+        // switch to home page on success
+        if (res?['message'] == 'success') {
+          // store user data to shared_preferences / local storage
+          // on local storage true - redirect to homepage
+          Functions.showToast('Registration Successful');
+          MyRouter.pushPageReplacement(context, SignInPage());
+        } else if (res?['message'] == 'failed') {
+          Functions.showToast('Error, Registration Failed');
+        } else if (res?['message'] == 'error') {
+          //
+          Functions.showToast('Server Error');
+        }
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
