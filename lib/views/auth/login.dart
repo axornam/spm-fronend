@@ -82,7 +82,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   : (_medium ? _height / 3.75 : _height / 3.5),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200]!, Colors.pinkAccent],
+                  colors: [Colors.blue, Colors.pinkAccent],
                 ),
               ),
             ),
@@ -98,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   : (_medium ? _height / 4.25 : _height / 4),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200]!, Colors.pinkAccent],
+                  colors: [Colors.blue, Colors.pinkAccent],
                 ),
               ),
             ),
@@ -126,10 +126,10 @@ class _SignInScreenState extends State<SignInScreen> {
       child: Row(
         children: <Widget>[
           Text(
-            "Welcome",
+            "UNIVERSITY OF GHANA",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: _large ? 60 : (_medium ? 50 : 40),
+              fontSize: _large ? 29 : (_medium ? 50 : 40),
             ),
           ),
         ],
@@ -143,7 +143,7 @@ class _SignInScreenState extends State<SignInScreen> {
       child: Row(
         children: <Widget>[
           Text(
-            "Sign in to your account",
+            "Registered Users: Login Credentials",
             style: TextStyle(
               fontWeight: FontWeight.w200,
               fontSize: _large ? 20 : (_medium ? 17.5 : 15),
@@ -176,7 +176,7 @@ class _SignInScreenState extends State<SignInScreen> {
       keyboardType: TextInputType.emailAddress,
       textEditingController: emailController,
       icon: Icons.email,
-      hint: "Email ID",
+      hint: " Your Email",
     );
   }
 
@@ -187,7 +187,7 @@ class _SignInScreenState extends State<SignInScreen> {
       icon: Icons.lock,
       obscureText: true,
       hint: "Password",
-    );
+      );
   }
 
   Widget forgetPassTextRow() {
@@ -212,7 +212,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Text(
               "Recover",
               style: TextStyle(
-                  fontWeight: FontWeight.w600, color: Colors.orange[200]),
+                  fontWeight: FontWeight.w600, color: Colors.indigo[200]),
             ),
           )
         ],
@@ -227,6 +227,7 @@ class _SignInScreenState extends State<SignInScreen> {
       onPressed: () async {
         String email = emailController.text;
         String password = passwordController.text;
+        Functions.showToast('trying to login');
 
         var res = await api.signIn({"email": email, "password": password});
         logger.i(res);
@@ -257,7 +258,7 @@ class _SignInScreenState extends State<SignInScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
           gradient: LinearGradient(
-            colors: <Color>[Colors.orange[200]!, Colors.pinkAccent],
+            colors: <Color>[Colors.blue, Colors.pinkAccent],
           ),
         ),
         padding: const EdgeInsets.all(12.0),
@@ -274,7 +275,7 @@ class _SignInScreenState extends State<SignInScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "Don't have an account?",
+            "Are you new here?",
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: _large ? 14 : (_medium ? 12 : 10)),
@@ -292,7 +293,7 @@ class _SignInScreenState extends State<SignInScreen> {
               "Sign up",
               style: TextStyle(
                   fontWeight: FontWeight.w800,
-                  color: Colors.orange[200],
+                  color: Colors.indigo[200],
                   fontSize: _large ? 19 : (_medium ? 17 : 15)),
             ),
           )
