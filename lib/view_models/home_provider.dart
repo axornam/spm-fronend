@@ -1,24 +1,29 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:studentprojectmanager/models/category.dart';
 import 'package:studentprojectmanager/util/api.dart';
 import 'package:studentprojectmanager/util/enum/api_request_status.dart';
 import 'package:studentprojectmanager/util/functions.dart';
 
 class HomeProvider with ChangeNotifier {
-  CategoryFeed top = CategoryFeed();
-  CategoryFeed recent = CategoryFeed();
-  APIRequestStatus apiRequestStatus = APIRequestStatus.loading;
+  Logger logger = Logger();
   Api api = Api();
+  APIRequestStatus apiRequestStatus = APIRequestStatus.loading;
+  var projects;
+  var categories;
 
   getFeeds() async {
     setApiRequestStatus(APIRequestStatus.loading);
     try {
-      CategoryFeed popular = await api.getCategory(Api.popular);
-      setTop(popular);
-      CategoryFeed newReleases = await api.getCategory(Api.recent);
-      setRecent(newReleases);
+      var mProjects = await api.getProjects();
+      setProjects(mProjects);
+
+      var mCategories = await api.getCategories();
+      setCategories(mCategories);
+
       setApiRequestStatus(APIRequestStatus.loaded);
+
     } catch (e) {
       checkError(e);
     }
@@ -37,21 +42,17 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setTop(value) {
-    top = value;
+  void setProjects(value) {
+    projects = value;
     notifyListeners();
   }
 
-  CategoryFeed getTop() {
-    return top;
+  getTop() {
+    return projects;
   }
 
-  void setRecent(value) {
-    recent = value;
+  void setCategories(value) {
+    categories = value;
     notifyListeners();
-  }
-
-  CategoryFeed getRecent() {
-    return recent;
   }
 }

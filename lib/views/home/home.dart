@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 import 'package:studentprojectmanager/components/body_builder.dart';
 import 'package:studentprojectmanager/components/book_card.dart';
 import 'package:studentprojectmanager/components/book_list_item.dart';
 import 'package:studentprojectmanager/models/category.dart';
-import 'package:studentprojectmanager/util/consts.dart';
 import 'package:studentprojectmanager/util/router.dart';
 import 'package:studentprojectmanager/view_models/home_provider.dart';
 import 'package:studentprojectmanager/views/genre/genre.dart';
-import 'package:provider/provider.dart';
+
+import '../../util/api.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -59,13 +61,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
       onRefresh: () => homeProvider.getFeeds(),
       child: ListView(
         children: <Widget>[
-          _buildFeaturedSection(homeProvider),
+          // _buildFeaturedSection(homeProvider),
           SizedBox(height: 20.0),
           _buildSectionTitle('Categories'),
           SizedBox(height: 10.0),
           _buildGenreSection(homeProvider),
           SizedBox(height: 20.0),
-          _buildSectionTitle('Recently Added'),
+          _buildSectionTitle('Projects'),
           SizedBox(height: 20.0),
           _buildNewSection(homeProvider),
         ],
@@ -99,10 +101,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           primary: false,
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           scrollDirection: Axis.horizontal,
-          itemCount: homeProvider.top.feed?.entry?.length ?? 0,
+          itemCount: homeProvider.projects.feed?.entry?.length ?? 0,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
-            Entry entry = homeProvider.top.feed!.entry![index];
+            Entry entry = homeProvider.projects.feed!.entry![index];
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
               child: BookCard(
@@ -124,16 +126,16 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           primary: false,
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           scrollDirection: Axis.horizontal,
-          itemCount: homeProvider.top.feed?.link?.length ?? 0,
+          itemCount: homeProvider.categories['body']?.length ?? 0,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
-            Link link = homeProvider.top.feed!.link![index];
+            var link = homeProvider.categories['body'][index];
+            // Logger logger = Logger();
+            // logger.d(homeProvider.projects['body']);
+            // logger.d(link['name']);
 
             // We don't need the tags from 0-9 because
             // they are not categories
-            if (index < 10) {
-              return SizedBox();
-            }
 
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
@@ -152,8 +154,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                     MyRouter.pushPage(
                       context,
                       Genre(
-                        title: '${link.title}',
-                        url: link.href!,
+                        title: '${link['name']}',
+                        url: '${link['id']!}',
                       ),
                     );
                   },
@@ -161,7 +163,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
-                        '${link.title}',
+                        '${link['name']}',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -183,9 +185,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
       padding: EdgeInsets.symmetric(horizontal: 15.0),
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: homeProvider.recent.feed?.entry?.length ?? 0,
+      itemCount: homeProvider.projects['body']?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
-        Entry entry = homeProvider.recent.feed!.entry![index];
+        var entry = homeProvider.projects['body'][index];
 
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),

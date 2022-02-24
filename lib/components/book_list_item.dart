@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:studentprojectmanager/components/loading_widget.dart';
-import 'package:studentprojectmanager/models/category.dart';
 import 'package:studentprojectmanager/util/router.dart';
 import 'package:uuid/uuid.dart';
 
 import '../views/details/details.dart';
 
 class BookListItem extends StatelessWidget {
-  final Entry entry;
+  final entry;
 
   BookListItem({
     Key? key,
@@ -54,7 +53,7 @@ class BookListItem extends StatelessWidget {
                 child: Hero(
                   tag: imgTag,
                   child: CachedNetworkImage(
-                    imageUrl: '${entry.link![1].href!}',
+                    imageUrl: '${entry['image']}',
                     placeholder: (context, url) => Container(
                       height: 150.0,
                       width: 100.0,
@@ -87,7 +86,8 @@ class BookListItem extends StatelessWidget {
                     child: Material(
                       type: MaterialType.transparency,
                       child: Text(
-                        '${entry.title!.t!.replaceAll(r'\', '')}',
+                        // '${entry.title!.t!.replaceAll(r'\', '')}',
+                        '${entry['abstract']}',
                         style: TextStyle(
                           fontSize: 17.0,
                           fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class BookListItem extends StatelessWidget {
                     child: Material(
                       type: MaterialType.transparency,
                       child: Text(
-                        '${entry.author!.name!.t!}',
+                        '${entry['name']}',
                         style: TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w800,
@@ -117,7 +117,7 @@ class BookListItem extends StatelessWidget {
                   ),
                   SizedBox(height: 10.0),
                   Text(
-                    '${entry.summary!.t!.length < 100 ? entry.summary!.t! : entry.summary!.t!.substring(0, 100)}...'
+                    '${entry['introduction']!.length < 100 ? entry['introduction']! : entry['introduction']!.substring(0, 100)}...'
                         .replaceAll(r'\n', '\n')
                         .replaceAll(r'\r', '')
                         .replaceAll(r'\"', '"'),
