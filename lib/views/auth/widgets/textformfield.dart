@@ -11,6 +11,7 @@ class CustomTextField extends StatelessWidget {
   double _pixelRatio = 0;
   bool large = false;
   bool medium = false;
+  var maxLines;
 
   CustomTextField({
     required this.hint,
@@ -18,6 +19,7 @@ class CustomTextField extends StatelessWidget {
     required this.keyboardType,
     required this.icon,
     this.obscureText = false,
+    this.maxLines = 1
   });
 
   @override
@@ -33,6 +35,7 @@ class CustomTextField extends StatelessWidget {
         controller: textEditingController,
         keyboardType: keyboardType,
         cursorColor: Colors.orange[200],
+        maxLines: this.maxLines,
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
           hintText: hint,
