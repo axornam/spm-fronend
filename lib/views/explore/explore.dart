@@ -29,11 +29,12 @@ class _ExploreState extends State<Explore> {
               'Explore',
             ),
           ),
-          body: BodyBuilder(
-            apiRequestStatus: homeProvider.apiRequestStatus,
-            child: _buildBodyList(homeProvider),
-            reload: () => homeProvider.getFeeds(),
-          ),
+          // body: BodyBuilder(
+          //   apiRequestStatus: homeProvider.apiRequestStatus,
+          //   // child: _buildBodyList(homeProvider),
+          //   reload: () => homeProvider.getFeeds(),
+          //   child: (){},
+          // ),
         );
       },
     );
@@ -41,9 +42,9 @@ class _ExploreState extends State<Explore> {
 
   _buildBodyList(HomeProvider homeProvider) {
     return ListView.builder(
-      itemCount: homeProvider.top.feed?.link?.length ?? 0,
+      itemCount: homeProvider.projects['body']?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
-        Link link = homeProvider.top.feed!.link![index];
+        Link link = homeProvider.projects.feed!.link![index];
 
         // We don't need the tags from 0-9 because
         // they are not categories

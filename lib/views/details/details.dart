@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
 class Details extends StatefulWidget {
-  final Entry entry;
+  final entry;
   final String imgTag;
   final String titleTag;
   final String authorTag;
@@ -40,8 +40,8 @@ class _DetailsState extends State<Details> {
       (_) {
         Provider.of<DetailsProvider>(context, listen: false)
             .setEntry(widget.entry);
-        Provider.of<DetailsProvider>(context, listen: false)
-            .getFeed(widget.entry.author!.uri!.t!.replaceAll(r'\&lang=en', ''));
+        // Provider.of<DetailsProvider>(context, listen: false)
+        //     .getFeed(widget.entry.author!.uri!.t!.replaceAll(r'\&lang=en', ''));
       },
     );
   }
@@ -81,13 +81,13 @@ class _DetailsState extends State<Details> {
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             children: <Widget>[
               SizedBox(height: 10.0),
-              _buildImageTitleSection(detailsProvider),
+              // _buildImageTitleSection(detailsProvider),
               SizedBox(height: 30.0),
               _buildSectionTitle('Book Description'),
               _buildDivider(),
               SizedBox(height: 10.0),
               DescriptionTextWidget(
-                text: '${widget.entry.summary!.t}',
+                text: '${widget.entry['description']}',
               ),
               SizedBox(height: 30.0),
               _buildSectionTitle('More from Author'),
@@ -116,7 +116,7 @@ class _DetailsState extends State<Details> {
           Hero(
             tag: widget.imgTag,
             child: CachedNetworkImage(
-              imageUrl: '${widget.entry.link![1].href}',
+              imageUrl: '${widget.entry['image']}',
               placeholder: (context, url) => Container(
                 height: 200.0,
                 width: 130.0,
@@ -141,7 +141,7 @@ class _DetailsState extends State<Details> {
                   child: Material(
                     type: MaterialType.transparency,
                     child: Text(
-                      '${widget.entry.title!.t!.replaceAll(r'\', '')}',
+                      '${widget.entry['name'].replaceAll(r'\', '')}',
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -156,7 +156,7 @@ class _DetailsState extends State<Details> {
                   child: Material(
                     type: MaterialType.transparency,
                     child: Text(
-                      '${widget.entry.author!.name!.t}',
+                      '${widget.entry['author']}',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w800,
@@ -243,7 +243,7 @@ class _DetailsState extends State<Details> {
       EpubViewer.locatorStream.listen((event) async {
         // Get locator here
         Map json = jsonDecode(event);
-        json['bookId'] = widget.entry.id!.t!.toString();
+        json['bookId'] = widget.entry['id'].toString();
         // Save locator to your database
         await LocatorDB().update(json);
       });
@@ -262,8 +262,8 @@ class _DetailsState extends State<Details> {
       return FlatButton(
         onPressed: () => provider.downloadFile(
           context,
-          widget.entry.link![3].href!,
-          widget.entry.title!.t!.replaceAll(' ', '_').replaceAll(r"\'", "'"),
+          widget.entry['document'],
+          widget.entry['introduction'].replaceAll(' ', '_').replaceAll(r"\'", "'"),
         ),
         child: Text(
           'Download',
@@ -322,7 +322,7 @@ class _DetailsState extends State<Details> {
   }
 
   _share() {
-    Share.share('${widget.entry.title!.t} by ${widget.entry.author!.name!.t}'
-        'Read/Download ${widget.entry.title!.t} from ${widget.entry.link![3].href}.');
+    Share.share('${widget.entry['name']} by ${widget.entry['author']}'
+        'Read/Download ${widget.entry['name']} from ${widget.entry['image']}.');
   }
 }

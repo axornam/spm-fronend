@@ -23,7 +23,11 @@ class _MainScreenState extends State<MainScreen> {
           physics: NeverScrollableScrollPhysics(),
           controller: _pageController,
           onPageChanged: onPageChanged,
-          children: <Widget>[Home(), Explore(), Profile()],
+          children: <Widget>[
+            Home(),
+            // Explore(),
+            Profile()
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -36,10 +40,10 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icon(Feather.home),
               label: 'Home',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Feather.compass),
-              label: 'Explore',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Feather.compass),
+            //   label: 'Explore',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Feather.settings),
               label: 'Settings',

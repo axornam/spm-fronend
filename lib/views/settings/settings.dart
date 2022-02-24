@@ -7,6 +7,7 @@ import 'package:studentprojectmanager/views/downloads/downloads.dart';
 import 'package:studentprojectmanager/views/favorites/favorites.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:studentprojectmanager/views/project/project_add.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -20,16 +21,16 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     items = [
-      {
-        'icon': Feather.heart,
-        'title': 'Favorites',
-        'function': () => _pushPage(Favorites()),
-      },
-      {
-        'icon': Feather.download,
-        'title': 'Downloads',
-        'function': () => _pushPage(Downloads()),
-      },
+      // {
+      //   'icon': Feather.heart,
+      //   'title': 'Favorites',
+      //   'function': () => _pushPage(Favorites()),
+      // },
+      // {
+      //   'icon': Feather.download,
+      //   'title': 'Downloads',
+      //   'function': () => _pushPage(Downloads()),
+      // },
       {
         'icon': Feather.moon,
         'title': 'Dark Mode',
@@ -50,6 +51,11 @@ class _ProfileState extends State<Profile> {
         'title': 'Licenses',
         'function': () => _pushPageDialog(LicensePage()),
       },
+      {
+        'icon': Feather.file_plus,
+        'title': 'Add a Project',
+        'function': () => _pushPage(AddProjectScreen())
+      }
     ];
   }
 

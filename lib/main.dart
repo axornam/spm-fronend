@@ -37,11 +37,6 @@ class MyApp extends StatelessWidget {
           theme: themeData(appProvider.theme),
           darkTheme: themeData(ThemeConfig.darkTheme),
           home: MainScreen(),
-          // routes: <String, WidgetBuilder>{
-          // SIGN_IN: (BuildContext context) => SignInPage(),
-          // SIGN_UP: (BuildContext context) => SignUpScreen(),
-          // HOMEPAGE: (BuildContext context) => SignUpScreen(),
-          // },
         );
       },
     );
