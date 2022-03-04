@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:studentprojectmanager/util/dialogs.dart';
-import 'package:studentprojectmanager/views/explore/explore.dart';
 import 'package:studentprojectmanager/views/home/home.dart';
 import 'package:studentprojectmanager/views/settings/settings.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 class MainScreen extends StatefulWidget {
   @override

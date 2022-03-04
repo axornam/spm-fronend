@@ -372,7 +372,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           GestureDetector(
             onTap: () {
               // Navigator.of(context).pop(SIGN_IN);
-              MyRouter.pushPageReplacement(context, SignUpScreen());
+              // MyRouter.pushPageReplacement(context, SignUpScreen());
+              MyRouter.popPage(context);
               print("Routing to Sign up screen");
             },
             child: Text(

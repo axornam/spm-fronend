@@ -13,7 +13,7 @@ class Api {
   Dio dio = Dio();
 
   // static String apiUrl = 'http://192.168.137.1:3000/api/v1';
-  static String apiUrl = 'http://192.168.137.1:3000/api/v1';
+  static String apiUrl = 'http://192.168.137.88:3000/api/v1';
   static String registerEndPoint = '$apiUrl/users/register';
   static String loginEndPoint = '$apiUrl/users/login';
   static String getCategoriesEndPoint = '$apiUrl/categories';

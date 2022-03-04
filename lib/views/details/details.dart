@@ -38,8 +38,8 @@ class _DetailsState extends State<Details> {
     super.initState();
     SchedulerBinding.instance!.addPostFrameCallback(
       (_) {
-        Provider.of<DetailsProvider>(context, listen: false)
-            .setEntry(widget.entry);
+        // Provider.of<DetailsProvider>(context, listen: false)
+        //     .setEntry(widget.entry);
         // Provider.of<DetailsProvider>(context, listen: false)
         //     .getFeed(widget.entry.author!.uri!.t!.replaceAll(r'\&lang=en', ''));
       },
@@ -82,18 +82,29 @@ class _DetailsState extends State<Details> {
             children: <Widget>[
               SizedBox(height: 10.0),
               // _buildImageTitleSection(detailsProvider),
+              // _buildDivider(),
               SizedBox(height: 30.0),
-              _buildSectionTitle('Book Description'),
+              _buildSectionTitle('Project Description'),
               _buildDivider(),
               SizedBox(height: 10.0),
               DescriptionTextWidget(
                 text: '${widget.entry['description']}',
               ),
-              SizedBox(height: 30.0),
-              _buildSectionTitle('More from Author'),
-              _buildDivider(),
               SizedBox(height: 10.0),
-              _buildMoreBook(detailsProvider),
+              // _buildMoreBook(detailsProvider),
+              _buildDivider(),
+              _buildSectionTitle('Introduction'),
+              DescriptionTextWidget(
+                text: '${widget.entry['introduction']}',
+              ),
+              SizedBox(height: 10.0),
+              _buildDivider(),
+              _buildSectionTitle('Abstract'),
+              DescriptionTextWidget(
+                text: '${widget.entry['abstract']}',
+              ),
+              // SizedBox(height: 30.0),
+              // _buildSectionTitle('More from Author'),
             ],
           ),
         );
@@ -263,7 +274,9 @@ class _DetailsState extends State<Details> {
         onPressed: () => provider.downloadFile(
           context,
           widget.entry['document'],
-          widget.entry['introduction'].replaceAll(' ', '_').replaceAll(r"\'", "'"),
+          widget.entry['introduction']
+              .replaceAll(' ', '_')
+              .replaceAll(r"\'", "'"),
         ),
         child: Text(
           'Download',

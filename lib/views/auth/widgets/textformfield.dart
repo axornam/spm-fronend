@@ -29,7 +29,7 @@ class CustomTextField extends StatelessWidget {
     large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Material(
-      borderRadius: BorderRadius.circular(30.0),
+      borderRadius: BorderRadius.circular(5.0),
       elevation: large ? 12 : (medium ? 10 : 8),
       child: TextFormField(
         controller: textEditingController,
@@ -40,7 +40,7 @@ class CustomTextField extends StatelessWidget {
           prefixIcon: Icon(icon, color: Colors.orange[200], size: 20),
           hintText: hint,
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(5.0),
               borderSide: BorderSide.none),
         ),
       ),
