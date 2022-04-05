@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
@@ -11,6 +12,7 @@ import 'package:studentprojectmanager/views/auth/widgets/responsive_ui.dart';
 import 'package:studentprojectmanager/views/auth/widgets/textformfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:studentprojectmanager/views/home/home.dart';
 
 import '../../util/api.dart';
 import '../../util/functions.dart';
@@ -29,7 +31,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
 
   //
   final ImagePicker imgPicker = ImagePicker();
-  File? image;
+  File? imageFile;
   late Image img;
 
   // text field controllers
@@ -39,10 +41,10 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController departmentController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
+  TextEditingController supervisorController = TextEditingController();
   TextEditingController introController = TextEditingController();
   TextEditingController abstractController = TextEditingController();
-  TextEditingController categoryController = TextEditingController();
+ // TextEditingController categoryController = TextEditingController();
 
   // utils
   Api api = Api();
@@ -85,78 +87,6 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
       ),
     );
   }
-
-  // Widget clipShape() {
-  //   return Stack(
-  //     children: <Widget>[
-  //       Opacity(
-  //         opacity: 0.75,
-  //         child: ClipPath(
-  //           clipper: CustomShapeClipper(),
-  //           child: Container(
-  //             height: _large
-  //                 ? _height / 8
-  //                 : (_medium ? _height / 7 : _height / 6.5),
-  //             decoration: BoxDecoration(
-  //               gradient: LinearGradient(
-  //                 colors: [Colors.blue, Colors.pinkAccent],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       Opacity(
-  //         opacity: 0.5,
-  //         child: ClipPath(
-  //           clipper: CustomShapeClipper2(),
-  //           child: Container(
-  //             height: _large
-  //                 ? _height / 12
-  //                 : (_medium ? _height / 11 : _height / 10),
-  //             decoration: BoxDecoration(
-  //               gradient: LinearGradient(
-  //                 colors: [Colors.blue, Colors.pinkAccent],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       Center(
-  //           child:
-  //               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-  //         ElevatedButton(
-  //           style: ElevatedButton.styleFrom(
-  //             primary: Colors.red, // background
-  //             onPrimary: Colors.yellow, // foreground
-  //           ),
-  //           onPressed: () {},
-  //           child: Text('Upload your document'),
-  //         ),
-  //       ])),
-  //       Positioned(
-  //         top: _height / 8,
-  //         left: _width / 1.75,
-  //         child: Container(
-  //           alignment: Alignment.center,
-  //           height: _height / 23,
-  //           padding: EdgeInsets.all(5),
-  //           // decoration: BoxDecorationon(
-  //           //   shape: BoxShape.circle,
-  //           //   color:  Colors.orange[100],
-  //           // ),
-  //           child: GestureDetector(
-  //               onTap: () {
-  //                 print('Adding photo');
-  //               },
-  //               child: Icon(
-  //                 Icons.add_a_photo,
-  //                 size: _large ? 22 : (_medium ? 15 : 13),
-  //               )),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   Widget clipShape() {
     return Stack(
@@ -209,14 +139,15 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               color: Colors.white,
               shape: BoxShape.circle,
             ),
-            child: this.image != null
+            child: this.imageFile != null
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(100.0),
-                    child: Image.file(
-                      this.image!,
-                      fit: BoxFit.cover,
-                    ),
-                  )
+                    child: kIsWeb
+                        ? Image.network(this.imageFile!.path, fit: BoxFit.cover)
+                        : Image.file(
+                            this.imageFile!,
+                            fit: BoxFit.cover,
+                          ))
                 : null,
             // child: GestureDetector(
             //     onTap: () async  {
@@ -249,18 +180,21 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                 onTap: () async {
                   final imageXfile =
                       await imgPicker.pickImage(source: ImageSource.gallery);
+
+                  // imageXfile.readAsBytes();
+
+                  logger.d(imageXfile?.path);
+
                   if (imageXfile == null) return;
 
-                  final tempImage = File(imageXfile.path);
+                  File tempImage = File(imageXfile.path);
+
                   setState(() {
-                    this.image = tempImage;
-                    // final path = imageXfile.path;
-                    // final bytes = await File(path).readAsBytes();
-                    // this.img = Image.decodeImage(bytes);
+                    this.imageFile = tempImage;
                   });
 
                   Functions.showToast("Adding Photo");
-                  logger.d(this.image);
+                  logger.d(this.imageFile);
                 },
                 child: Icon(
                   Icons.add_a_photo,
@@ -287,14 +221,16 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
             SizedBox(height: _height / 130.0),
             departmentTextFormField(),
             SizedBox(height: _height / 130.0),
-            descriptionTextFormField(),
-            SizedBox(height: _height / 130.0),
-            introTextFormField(),
+            supervisorTextFormField(
+
+            ),
             SizedBox(height: _height / 130.0),
             abstractTextFormField(),
             SizedBox(height: _height / 130.0),
-            categoryTextFormField(),
+            introTextFormField(),
             SizedBox(height: _height / 130.0),
+           // categoryTextFormField(),
+           // SizedBox(height: _height / 130.0),
             // file upload field
             SizedBox(height: _height / 130.0),
           ],
@@ -348,66 +284,44 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     );
   }
 
-  Widget descriptionTextFormField() {
+  Widget supervisorTextFormField() {
     return CustomTextField(
-      keyboardType: TextInputType.number,
-      icon: Icons.phone,
-      hint: "Description",
-      textEditingController: descriptionController,
-    );
-  }
-
-  Widget introTextFormField() {
-    return CustomTextField(
-      keyboardType: TextInputType.number,
-      icon: Icons.phone,
-      hint: "Introduction",
-      textEditingController: introController,
+      keyboardType: TextInputType.text,
+      icon: Icons.house,
+      hint: "Supervisor ",
+      textEditingController: supervisorController,
     );
   }
 
   Widget abstractTextFormField() {
     return CustomTextField(
-      keyboardType: TextInputType.number,
-      icon: Icons.phone,
+      keyboardType: TextInputType.text,
+      icon: Icons.house,
       hint: "Abstract",
       textEditingController: abstractController,
+//margin: EdgeInsets.all(30)
+
+    );
+
+  }
+
+  Widget introTextFormField() {
+    return CustomTextField(
+      keyboardType: TextInputType.text,
+      icon: Icons.house,
+      hint: "Introduction",
+      textEditingController: introController,
     );
   }
 
-  Widget categoryTextFormField() {
+  /*Widget categoryTextFormField() {
     return CustomTextField(
-      keyboardType: TextInputType.number,
-      icon: Icons.phone,
+      keyboardType: TextInputType.text,
+      icon: Icons.house,
       hint: "Category",
       textEditingController: categoryController,
     );
-  }
-
-  // Widget acceptTermsTextRow() {
-  //   return Container(
-  //     margin: EdgeInsets.only(top: _height / 100.0),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: <Widget>[
-  //         Checkbox(
-  //             activeColor: Colors.blue[200],
-  //             value: checkBoxValue,
-  //             onChanged: (bool? newValue) {
-  //               setState(() {
-  //                 checkBoxValue = newValue!;
-  //               });
-  //             }),
-  //         Text(
-  //           "I accept all terms and conditions",
-  //           style: TextStyle(
-  //               fontWeight: FontWeight.w400,
-  //               fontSize: _large ? 12 : (_medium ? 11 : 10)),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  }*/
 
   Widget button() {
     return RaisedButton(
@@ -420,29 +334,28 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           "name": projectNameController.text + " " + authorNameController.text,
           "author": emailController.text,
           "department": departmentController.text,
-          "description": descriptionController.text,
+          "Supervisor": supervisorController.text,
           'introduction': introController.text,
           'abstract': abstractController.text,
-          'category': categoryController.text,
+         // 'category': categoryController.text,
         };
 
-        // logger.i(form);
-        var res =
-            await api.uploadProject(form, this.image?.path, this.image?.path);
+        var res = await api.uploadProject(
+            form, this.imageFile?.path, this.imageFile?.path);
         // logger.i(res);
         //
         // switch to home page on success
-        // if (res?['message'] == 'success') {
-        //   // store user data to shared_preferences / local storage
-        //   // on local storage true - redirect to homepage
-        //   Functions.showToast('Registration Successful');
-        //   MyRouter.pushPageReplacement(context, SignInPage());
-        // } else if (res?['message'] == 'failed') {
-        //   Functions.showToast('Error, Registration Failed');
-        // } else if (res?['message'] == 'error') {
-        //   //
-        //   Functions.showToast('Server Error');
-        // }
+        if (res?['message'] == 'success') {
+          // store user data to shared_preferences / local storage
+          // on local storage true - redirect to homepage
+          Functions.showToast('Project Upload Successful');
+          MyRouter.pushPageReplacement(context, Home());
+        } else if (res?['message'] == 'failed') {
+          Functions.showToast('Error, Upload Failed');
+        } else if (res?['message'] == 'error') {
+          //
+          Functions.showToast('Server Error');
+        }
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
@@ -464,82 +377,4 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
       ),
     );
   }
-//
-//   Widget infoTextRow() {
-//     return Container(
-//       margin: EdgeInsets.only(top: _height / 40.0),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: <Widget>[
-//           Text(
-//             "Or create using social media",
-//             style: TextStyle(
-//                 fontWeight: FontWeight.w400,
-//                 fontSize: _large ? 12 : (_medium ? 11 : 10)),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Widget socialIconsRow() {
-//     return Container(
-//       margin: EdgeInsets.only(top: _height / 80.0),
-//       child: Row(
-//         mainAxisSize: MainAxisSize.min,
-//         children: <Widget>[
-//           CircleAvatar(
-//             radius: 15,
-//             backgroundImage: AssetImage("assets/images/googlelogo.png"),
-//           ),
-//           SizedBox(
-//             width: 20,
-//           ),
-//           CircleAvatar(
-//             radius: 15,
-//             backgroundImage: AssetImage("assets/images/fblogo.jpg"),
-//           ),
-//           SizedBox(
-//             width: 20,
-//           ),
-//           CircleAvatar(
-//             radius: 15,
-//             backgroundImage: AssetImage("assets/images/twitterlogo.jpg"),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Widget signInTextRow() {
-//     return Container(
-//       margin: EdgeInsets.only(top: _height / 20.0),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: <Widget>[
-//           Text(
-//             "Already have an account?",
-//             style: TextStyle(fontWeight: FontWeight.w400),
-//           ),
-//           SizedBox(
-//             width: 5,
-//           ),
-//           GestureDetector(
-//             onTap: () {
-//               // Navigator.of(context).pop(SIGN_IN);
-//               MyRouter.pushPageReplacement(context, AddProjectScreen());
-//               print("Routing to Sign up screen");
-//             },
-//             child: Text(
-//               "Sign in",
-//               style: TextStyle(
-//                   fontWeight: FontWeight.w800,
-//                   color: Colors.orange[200],
-//                   fontSize: 19),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
 }

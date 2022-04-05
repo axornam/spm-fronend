@@ -12,8 +12,9 @@ import 'package:xml2json/xml2json.dart';
 class Api {
   Dio dio = Dio();
 
+  // static String apiUrl = 'http://172.20.10.1:3000/api/v1';
   // static String apiUrl = 'http://192.168.137.1:3000/api/v1';
-  static String apiUrl = 'http://192.168.137.88:3000/api/v1';
+  static String apiUrl = 'http://full-spm-api.herokuapp.com/api/v1';
   static String registerEndPoint = '$apiUrl/users/register';
   static String loginEndPoint = '$apiUrl/users/login';
   static String getCategoriesEndPoint = '$apiUrl/categories';
@@ -129,32 +130,30 @@ class Api {
       //     contentType: new MediaType('image', 'jpeg')));
     }
 
-    logger.i([
-      request.files.first,
-      request.files.last,
-    ]);
+    // logger.i([
+    //   request.files.first,
+    //   request.files.last,
+    // ]);
 
     var response = await request.send();
     logger.i([response.stream, response.statusCode]);
-    final res = await http.Response.fromStream(response);
-    // Map<String, dynamic> res;
+    // final res = await http.Response.fromStream(response);
+    Map<String, dynamic> res;
 
-    logger.d(res);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // user found
+      res = {"message": "success"};
+    } else if (response.statusCode == 400 || response.statusCode == 404) {
+      // user not found
+      res = {"message": "failed"};
+    } else if (response.statusCode >= 500) {
+      // server error
+      res = {"message": "error", "body": null};
+    } else {
+      res = {};
+    }
 
-    // if (response.statusCode == 200 || response.statusCode == 201) {
-    //   // user found
-    //   res = {"message": "success", "body": json.decode(response.body)};
-    // } else if (response.statusCode == 400 || response.statusCode == 404) {
-    //   // user not found
-    //   res = {"message": "failed", "body": response.body};
-    // } else if (response.statusCode >= 500) {
-    //   // server error
-    //   res = {"message": "error", "body": null};
-    // } else {
-    //   res = {};
-    // }
-
-    return null;
+    return res;
   }
 
   Future<Map<String, dynamic>?> getCategories() async {
