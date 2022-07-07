@@ -9,7 +9,6 @@ import 'package:studentprojectmanager/models/category.dart';
 import 'package:studentprojectmanager/util/router.dart';
 import 'package:studentprojectmanager/view_models/home_provider.dart';
 import 'package:studentprojectmanager/views/genre/genre.dart';
-
 import '../../util/api.dart';
 
 class Home extends StatefulWidget {
@@ -33,15 +32,6 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
       builder:
           (BuildContext context, HomeProvider homeProvider, Widget? child) {
         return Scaffold(
-          // appBar: AppBar(
-          //   centerTitle: true,
-          //   title: Text(
-          //     '${Constants.appName}',
-          //     style: TextStyle(
-          //       fontSize: 20.0,
-          //     ),
-          //   ),
-          // ),
           body: _buildBody(homeProvider),
         );
       },
@@ -69,7 +59,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           SizedBox(height: 20.0),
           _buildSectionTitle('Projects'),
           SizedBox(height: 20.0),
-          _buildNewSection(homeProvider),
+          _buildProjectsSection(homeProvider),
         ],
       ),
     );
@@ -179,7 +169,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  _buildNewSection(HomeProvider homeProvider) {
+  _buildProjectsSection(HomeProvider homeProvider) {
     return ListView.builder(
       primary: false,
       padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -187,7 +177,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
       physics: NeverScrollableScrollPhysics(),
       itemCount: homeProvider.projects['body']?.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
-        var entry = homeProvider.projects['body'][index];
+        var entry = homeProvider.projects['body']?[index];
+        Logger l = Logger();
+        l.d(entry);
 
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),

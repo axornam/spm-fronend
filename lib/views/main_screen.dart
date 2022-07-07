@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:studentprojectmanager/util/dialogs.dart';
 import 'package:studentprojectmanager/views/home/home.dart';
-import 'package:studentprojectmanager/views/settings/settings.dart';
+import 'package:studentprojectmanager/views/profile/profile.dart';
+import 'package:studentprojectmanager/views/search/search_page.dart';
+
+import '../util/router.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -18,40 +21,47 @@ class _MainScreenState extends State<MainScreen> {
     return WillPopScope(
       onWillPop: () => Dialogs().showExitDialog(context),
       child: Scaffold(
-        body: PageView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: _pageController,
-          onPageChanged: onPageChanged,
-          children: <Widget>[
-            Home(),
-            // Explore(),
-            Profile()
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          selectedItemColor: Theme.of(context).accentColor,
-          unselectedItemColor: Colors.grey[500],
-          elevation: 20,
-          type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Feather.home),
-              label: 'Home',
+          body: PageView(
+            physics: NeverScrollableScrollPhysics(),
+            controller: _pageController,
+            onPageChanged: onPageChanged,
+            children: <Widget>[
+              Home(),
+              // Explore(),
+              Profile(),
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            selectedItemColor: Theme.of(context).accentColor,
+            unselectedItemColor: Colors.grey[500],
+            elevation: 20,
+            type: BottomNavigationBarType.fixed,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Feather.home),
+                label: 'Home',
+              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Feather.compass),
+              //   label: 'Explore',
+              // ),
+              BottomNavigationBarItem(
+                icon: Icon(Feather.settings),
+                label: 'Settings',
+              ),
+            ],
+            onTap: navigationTapped,
+            currentIndex: _page,
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => {MyRouter.pushPage(context, SearchPage())},
+            backgroundColor: Theme.of(context).accentColor,
+            child: Icon(
+              Icons.search,
+              color: Colors.white,
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Feather.compass),
-            //   label: 'Explore',
-            // ),
-            BottomNavigationBarItem(
-              icon: Icon(Feather.settings),
-              label: 'Settings',
-            ),
-          ],
-          onTap: navigationTapped,
-          currentIndex: _page,
-        ),
-      ),
+          )),
     );
   }
 

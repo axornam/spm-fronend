@@ -34,7 +34,7 @@ class BookListItem extends StatelessWidget {
         );
       },
       child: Container(
-        height: 150.0,
+        height: 170.0,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,

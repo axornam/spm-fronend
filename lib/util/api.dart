@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
@@ -15,25 +13,37 @@ class Api {
   // static String apiUrl = 'http://172.20.10.1:3000/api/v1';
   // static String apiUrl = 'http://192.168.137.1:3000/api/v1';
   static String apiUrl = 'http://full-spm-api.herokuapp.com/api/v1';
+  static String searchUrl = 'http://spm-search.herokuapp.com/api';
+  static String searchUrlLocal = 'http://127.0.0.1:8000/search/query/';
   static String registerEndPoint = '$apiUrl/users/register';
   static String loginEndPoint = '$apiUrl/users/login';
   static String getCategoriesEndPoint = '$apiUrl/categories';
   static String uploadProjectEndPoint = '$apiUrl/projects';
 
-  static String baseURL = 'https://catalog.feedbooks.com';
-  static String publicDomainURL = '$baseURL/publicdomain/browse';
-  static String popular = '$publicDomainURL/top.atom';
-  static String recent = '$publicDomainURL/recent.atom';
-  static String awards = '$publicDomainURL/awards.atom';
-  static String noteworthy = '$publicDomainURL/homepage_selection.atom';
-  static String shortStory = '$publicDomainURL/top.atom?cat=FBFIC029000';
-  static String sciFi = '$publicDomainURL/top.atom?cat=FBFIC028000';
-  static String actionAdventure = '$publicDomainURL/top.atom?cat=FBFIC002000';
-  static String mystery = '$publicDomainURL/top.atom?cat=FBFIC022000';
-  static String romance = '$publicDomainURL/top.atom?cat=FBFIC027000';
-  static String horror = '$publicDomainURL/top.atom?cat=FBFIC015000';
-
   var logger = Logger();
+
+  Future<Map<String, dynamic>> doSearch(String searchQuery) async {
+    Map<String, dynamic> res = {"": ""};
+    Uri uri = Uri.parse(searchUrlLocal + searchQuery);
+    http.Response response =
+        await http.get(uri, headers: {'Content-Type': 'Application/json'});
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // user found
+      res = {"message": "success", "body": json.decode(response.body)};
+    } else if (response.statusCode == 400 || response.statusCode == 404) {
+      // user not found
+      res = {"message": "failed", "body": response.body};
+    } else if (response.statusCode >= 500) {
+      // server error
+      res = {"message": "error", "body": null};
+    } else {
+      res = {};
+    }
+
+    // logger.d(res);
+    return res;
+  }
 
   Future<CategoryFeed> getCategory(String url) async {
     var res = await dio.get(url).catchError((e) {
@@ -176,7 +186,7 @@ class Api {
       res = {};
     }
 
-    logger.d(res);
+    // logger.d(res);
     return res;
   }
 
