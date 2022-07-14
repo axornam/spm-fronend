@@ -9,6 +9,9 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:studentprojectmanager/views/project/project_add.dart';
 
+import '../../util/api.dart';
+import '../main_screen.dart';
+
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
@@ -55,7 +58,8 @@ class _ProfileState extends State<Profile> {
         'icon': Feather.file_plus,
         'title': 'Add a Project',
         'function': () => _pushPage(AddProjectScreen())
-      }
+      },
+      {'icon': Feather.user, 'title': "Log Out", 'function': () => _logOut()}
     ];
   }
 
@@ -129,6 +133,13 @@ class _ProfileState extends State<Profile> {
 
   _pushPageDialog(Widget page) {
     MyRouter.pushPageDialog(context, page);
+  }
+
+  _logOut() async {
+    final res = await Api().logOut();
+    if (res == true) {
+      MyRouter.pushPageReplacement(context, MainScreen());
+    }
   }
 
   showAbout() {

@@ -215,6 +215,12 @@ class Api {
     return res;
   }
 
+  Future<bool> logOut() async {
+    var pref = await SharedPreferences.getInstance();
+    final success = await pref.remove("user");
+    return success;
+  }
+
   Future<List?> checkLogin() async {
     var prefs = await SharedPreferences.getInstance();
     List? user = await prefs.getStringList("user");
