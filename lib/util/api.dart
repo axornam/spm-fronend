@@ -214,4 +214,10 @@ class Api {
 
     return res;
   }
+
+  Future<List?> checkLogin() async {
+    var prefs = await SharedPreferences.getInstance();
+    List? user = await prefs.getStringList("user");
+    return user;
+  }
 }

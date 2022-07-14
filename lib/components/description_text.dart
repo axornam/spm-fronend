@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:studentprojectmanager/util/router.dart';
+import 'package:studentprojectmanager/views/auth/login.dart';
+
+import '../util/api.dart';
 
 class DescriptionTextWidget extends StatefulWidget {
   final String text;
@@ -64,10 +69,42 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
                       ),
                     ],
                   ),
-                  onTap: () {
-                    setState(() {
-                      flag = !flag;
-                    });
+                  onTap: () async {
+                    // TODO add authentication check
+                    List? user = await Api().checkLogin();
+
+                    if (user != null) {
+                      setState(() {
+                        flag = !flag;
+                      });
+                      return;
+                    }
+
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return AlertDialog(
+                          title: Text(
+                            'Warning',
+                          ),
+                          content: Text(
+                            'You are not Logged In',
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              textColor: Theme.of(context).accentColor,
+                              onPressed: () =>
+                                  MyRouter.pushPage(context, SignInPage()),
+                              child: Text(
+                                'Login',
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    //
                   },
                 ),
               ],
